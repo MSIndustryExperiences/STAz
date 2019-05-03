@@ -1,27 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 
 . ./config.sh
+. ./scripts/resourceGroup.sh
 
 az login
 
-
-if az group exists --name $RESOURCE_GROUP_NAME
-then
-    echo "$RESOURCE_GROUP_NAME already exists"
-else 
-    echo "CREATING RESOURCE GROUP: $RESOURCE_GROUP_NAME"
-    az group create --location $LOCATION --name $RESOURCE_GROUP_NAME # --subscription $SUBSCRIPTION_ID
-fi
-
-
-
-
-
-
-
-
-
-
-
-
-
+create_resource_group
