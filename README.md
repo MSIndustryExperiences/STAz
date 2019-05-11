@@ -1,3 +1,3 @@
 # STAz
 
-A specialized infrastructure setup scripting solution.
+A specialized infrastructure setup solution using the Azure CLI.
