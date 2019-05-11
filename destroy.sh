@@ -3,6 +3,6 @@
 . ./config.sh
 . ./scripts/resourceGroup.sh
 
-az login
+# az login
 
 delete_resource_group
