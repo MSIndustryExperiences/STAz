@@ -5,6 +5,16 @@
 # az group deployment create --resource-group $RESOURCE_GROUP_NAME --template-file ./templates/customer-rg.json
 
 
+az network vnet create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name st-text-vnet \
+    --address-prefix 10.0.0.1/16 \
+    --subnet-name "$PREFIX-subnet" \
+    --subnet-prefix 10.0.2.1/24
+
+
+
+
 # Create a network security group (NSG) for the frontend subnet.
 # az network nsg create \
 #   --resource-group $RESOURCE_GROUP_NAME \
