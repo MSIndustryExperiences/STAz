@@ -1,9 +1,5 @@
 #!/bin/bash
 
-. ./config.sh
-
-
-
 create_vm () {
     
     local vm_name=$1
@@ -24,7 +20,9 @@ create_vm () {
         --size $vm_size \
         --os-disk-name $os_disk \
         --authentication-type ssh \
-        --generate-ssh-keys
+        --generate-ssh-keys \
+        --vnet-name 
+        --subnet 
 
     # create new software disk and attach it
     echo "ATTACHING APP DISK: $app_disk"

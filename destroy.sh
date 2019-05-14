@@ -3,7 +3,7 @@
 . ./config.sh
 . ./scripts/resourceGroup.sh
 
+# Sign in on the command line with this command or uncomment this line
 # az login
 
-echo "This could take some time and will destroy all resources in the Resource Group."
 delete_resource_group
