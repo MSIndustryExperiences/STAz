@@ -5,6 +5,8 @@ create_vm () {
     local vm_name=$1
     local disk_name=$2
     local vm_size=$3
+    local vnet=$4
+    local sub_net=$5
     
     local os_disk="$vm_name-os"
     local data_disk="$vm_name-data"
@@ -21,8 +23,8 @@ create_vm () {
         --os-disk-name $os_disk \
         --authentication-type ssh \
         --generate-ssh-keys \
-        --vnet-name 
-        --subnet 
+        --vnet-name $vnet \
+        --subnet $sub_net
 
     # create new software disk and attach it
     echo "ATTACHING APP DISK: $app_disk"
