@@ -10,12 +10,12 @@
 
 create_resource_group
 
-create_vnet "$PREFIX-outer-vnet" 10.0.0.0/16
+create_vnet $VNET_NAME 10.0.0.0/16
 
-create_subnet "$PREFIX-poc-subnet" 10.0.1.0/24 "$PREFIX-outer-vnet" 
-create_subnet "$PREFIX-eng-subnet" 10.0.2.0/24 "$PREFIX-outer-vnet"
-create_subnet "$PREFIX-prod-subnet" 10.0.3.0/24 "$PREFIX-outer-vnet"
+create_subnet "$PREFIX-poc-subnet" 10.0.1.0/24 $VNET_NAME 
+create_subnet "$PREFIX-eng-subnet" 10.0.2.0/24 $VNET_NAME
+create_subnet "$PREFIX-prod-subnet" 10.0.3.0/24 $VNET_NAME
 
-create_vm "$PREFIX-01-vm" "$PREFIX-01-disk" Standard_D4s_v3 "$PREFIX-outer-vnet" "$PREFIX-poc-subnet"
-create_vm "$PREFIX-02-vm" "$PREFIX-02-disk" Standard_D4s_v3 "$PREFIX-outer-vnet" "$PREFIX-eng-subnet"
-create_vm "$PREFIX-03-vm" "$PREFIX-02-disk" Standard_D4s_v3 "$PREFIX-outer-vnet" "$PREFIX-prod-subnet"
+create_vm "$PREFIX-poc-01-vm" Standard_D4s_v3 "$PREFIX-poc-subnet" 80 40 100
+create_vm "$PREFIX-poc-02-vm" Standard_D4s_v3 "$PREFIX-poc-subnet" 80 40 100
+create_vm "$PREFIX-poc-03-vm" Standard_D4s_v3 "$PREFIX-poc-subnet" 80 40 100

@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# create_dns () {
-
-# }
-
-
 function create_vnet () {
 
     local vnet_name=$1
