@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
 
 create_resource_group() {
     
-    if $(az group exists --name $RESOURCE_GROUP_NAME)
+    exists=$(az group exists --name $RESOURCE_GROUP_NAME)
+
+    if [[ $exists -eq True ]]
     then
         echo "RESOURCE GROUP $RESOURCE_GROUP_NAME ALREADY EXISTS"
         exit 1
@@ -15,7 +17,9 @@ create_resource_group() {
 
 delete_resource_group() {
 
-    if $(az group exists --name $RESOURCE_GROUP_NAME)
+    exists=$(az group exists --name $RESOURCE_GROUP_NAME)
+
+    if [[ $exists -eq True ]]
     then
         echo "DELETING RESOURCE GROUP: $RESOURCE_GROUP_NAME"
         echo "This could take some time and will destroy all resources in the Resource Group."
