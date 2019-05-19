@@ -2,12 +2,13 @@
 
 create_vm () {
     
-    local vm_name=$1
-    local vm_size=$2
+    local vm_size=$1
+    local vm_name=$2
     local sub_net_name=$3
-    local os_disk_size=$4
-    local app_disk_size=$5
-    local data_disk_size=$6
+    local vnet_name=$4
+    local os_disk_size =$5
+    local app_disk_size=$6
+    local data_disk_size=$7
 
     local os_disk_name="$vm_name-os"
     local data_disk_name="$vm_name-data"
@@ -18,7 +19,7 @@ create_vm () {
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
-        --data-disk-sizes-gb $os_disk_size \
+        --data-disk-sizes-gb $os_disk_size $os_disk_size \
         --generate-ssh-keys \
         --image CentOS \
         --name $vm_name \
@@ -26,9 +27,9 @@ create_vm () {
         --resource-group $RESOURCE_GROUP_NAME \
         --size $vm_size \
         --subnet $sub_net_name \
-        --vnet-name $VNET_NAME
+        --vnet-name $vnet_name
 
-    # create new software disk and attach it
+    # create new app disk and attach it
     echo "ATTACHING APP DISK: $app_disk_name"
     az vm disk attach \
         --name $app_disk_name \
