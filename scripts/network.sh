@@ -36,6 +36,8 @@ function create_subnet() {
 
 }
 
+
+
 # Create a network security group (NSG) for the frontend subnet.
 # az network nsg create \
 #   --resource-group $RESOURCE_GROUP_NAME \
