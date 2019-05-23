@@ -36,16 +36,12 @@ function create_subnet() {
 
 }
 
+create_nsg() {
 
+    echo "DREATING A NSG"
+    # az network nsg create \
+    #   --resource-group $RESOURCE_GROUP_NAME \
+    #   --name st-nsg \
+    #   --location $LOCATION
 
-# Create a network security group (NSG) for the frontend subnet.
-# az network nsg create \
-#   --resource-group $RESOURCE_GROUP_NAME \
-#   --name st-nsg \
-#   --location $LOCATION
-
-
-# show the results
-# az network vnet subnet list -g $RESOURCE_GROUP_NAME --vnet-name st-perimeter-vnet --output table
-
-# echo "CREATED NETWORK"
+}

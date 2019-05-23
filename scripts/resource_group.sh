@@ -23,7 +23,7 @@ delete_resource_group() {
     then
         echo "DELETING RESOURCE GROUP: $RESOURCE_GROUP_NAME"
         echo "This could take some time and will destroy all resources in the Resource Group."
-        az group delete --name $RESOURCE_GROUP_NAME
+        az group delete --resource-group $RESOURCE_GROUP_NAME
         echo "DELETED RESOURCE GROUP: $RESOURCE_GROUP_NAME"
     else
         echo "RESOURCE GROUP: $RESOURCE_GROUP_NAME DOES NOT EXIST"
