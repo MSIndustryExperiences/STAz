@@ -1,18 +1,22 @@
-echo "LOADING CONFIG"
 
-CUSTOMER_NAME="customername"
+##### Holding for now until all other configs work
 
-LOCATION="westus" # the region where you want to deploy resources
+# echo "LOADING CONFIG"
 
-PREFIX="st-$CUSTOMER_NAME" #prepended to resources
+# CUSTOMER_NAME="customerX"
 
-RESOURCE_GROUP_NAME="$PREFIX-rg"
+# LOCATION="westus" # the region where you want to deploy resources
 
-# SUB_ID="ab667571-f9a4-444a-9b43-6e32602a40ba"
+# PREFIX="st-$CUSTOMER_NAME" #prepended to resources
 
-VM_ADMIN_UID="hsimpson"
+# RESOURCE_GROUP_NAME="$PREFIX-rg"
+# AVAILABILITY_SET_NAME="$PREFIX-avail-set"
 
-VNET_NAME="$PREFIX-inner-vnet"
+# VNET_NAME_TEST=$PREFIX-test-vnet
+# VNET_NAME_POC=$PREFIX-poc-vnet
+# VNET_NAME_ENG=$PREFIX-eng-vnet
+
+# VM_ADMIN_UID="hsimpson"
 
 # network definitions
 
