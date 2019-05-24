@@ -31,10 +31,10 @@ create_vm () {
 
 attach_disk() {
 
-    disk_sku=$1
-    disk_capacity=$2
-    disk_name=$3
-    vm_name=$4
+    local disk_sku=$1
+    local disk_capacity=$2
+    local disk_name=$3
+    local vm_name=$4
 
     echo "ATTACHING APP DISK: $disk_name"
 
@@ -46,37 +46,5 @@ attach_disk() {
         --vm-name $vm_name \
         -g $RESOURCE_GROUP_NAME
 
+    echo "$disk_name was attached"
 }
-
-
-
-
-
-
-
-    # echo "ATTACHING APP DISK: $disk_name"
-    # az vm disk attach \
-    #     --name $disk_name \
-    #     --new \
-    #     --size-gb $disk_capacity \
-    #     --sku $disk_sku \
-    #     --vm-name $vm_name \
-    #     -g $RESOURCE_GROUP_NAME
-    
-    # # create new data disk and attach it
-    # if [ ! -z "$8" ]
-    # then
-        
-    #     echo "ATTACHING DATA DISK: $data_disk_name"
-    #     az vm disk attach \
-    #         --name $data_disk_name \
-    #         --new \
-    #         --size-gb $data_disk_size \
-    #         --sku StandardSSD_LRS \
-    #         --vm-name $vm_name \
-    #         -g $RESOURCE_GROUP_NAME
-
-    #     echo "CREATED VM $vm_name"
-
-    # fi
-
