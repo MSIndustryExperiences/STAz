@@ -27,5 +27,9 @@ server_name="$PREFIX-02-vm"
 create_vm Standard_DS2_v2 $server_name "$PREFIX-worker-subnet" $VNET_NAME 32 
 attach_disk Standard_LRS 40 "$PREFIX-02-srv" $server_name
 attach_disk Standard_LRS 320 "$PREFIX-02-data" $server_name
+attach_nsg $server_name
+
+
+
 
 

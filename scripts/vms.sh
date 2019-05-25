@@ -14,7 +14,7 @@ create_vm () {
 
     echo "CREATING VM: $vm_name"
 
-    az vm create \
+    response=$(az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
         --generate-ssh-keys \
@@ -26,7 +26,9 @@ create_vm () {
         --resource-group $RESOURCE_GROUP_NAME \
         --size $vm_size \
         --subnet $sub_net_name \
-        --vnet-name $vnet_name
+        --vnet-name $vnet_name)
+
+    echo "$response"
 }
 
 attach_disk() {
