@@ -22,14 +22,13 @@ delete_resource_group() {
     if [[ $exists == 0 ]]
     then
         echo "DELETING RESOURCE GROUP: $RESOURCE_GROUP_NAME"
-        echo "This could take some time and will destroy all resources in the Resource Group."
+        echo "This could take several minutes and will destroy all resources in the Resource Group."
         az group delete --resource-group $RESOURCE_GROUP_NAME
         echo "DELETED RESOURCE GROUP: $RESOURCE_GROUP_NAME"
         
     else
         echo "RESOURCE GROUP: $RESOURCE_GROUP_NAME DOES NOT EXIST"
         exit 1
-
     fi
 }
 
