@@ -79,19 +79,19 @@ attach_disk() {
     local disk_name=$3
     local vm_name=$4
 
-    # diskId=$(az disk show -g $RESOURCE_GROUP_NAME -n $disk_name --query 'id' -o tsv)
-    # az vm disk attach -g myResourceGroup --vm-name myVM --disk $diskId
 
-    echo "ATTACHING DISK: $disk_name"
+    echo "ATTACHING DISK: $disk_name: $disk_id"
 
-    az vm disk attach \
-        --name $disk_name \
-        --new \
-        --size-gb $disk_capacity \
-        --sku $disk_sku \
-        --vm-name $vm_name \
-        -g $RESOURCE_GROUP_NAME
+    # az vm disk attach \
+    #     --name $disk_name \
+    #     --new \
+    #     --size-gb $disk_capacity \
+    #     --sku $disk_sku \
+    #     --vm-name $vm_name \
+    #     -g $RESOURCE_GROUP_NAME
 
+    disk_id=$(az disk show -g $RESOURCE_GROUP_NAME -n $disk_name --query 'id' -o tsv)
+    az vm disk attach -g $RESOURCE_GROUP_NAME --vm-name $vm_name s --disk $diskId
     echo "$disk_name was attached"
 
     az vm open-port 
