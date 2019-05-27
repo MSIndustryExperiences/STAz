@@ -17,9 +17,7 @@ create_resource_group() {
 
 delete_resource_group() {
 
-    local exists=$(az group exists --name $RESOURCE_GROUP_NAME)
-
-    if [[ $exists == 0 ]]
+    if [[ $(az group exists --name $RESOURCE_GROUP_NAME) ]]
     then
         echo "DELETING RESOURCE GROUP: $RESOURCE_GROUP_NAME"
         echo "This could take several minutes and will destroy all resources in the Resource Group."

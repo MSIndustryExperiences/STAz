@@ -5,9 +5,7 @@ create_subnet() {
     local subnet_name=$1
     local address_prefix=$2
 
-    local nsg_name="$subnet_name-nsg"
-
-    create_nsg $nsg_name
+    local nsg_name="$subnet_name"
 
     echo "CREATING SUBNET $subnet_name"
 
@@ -15,8 +13,7 @@ create_subnet() {
         --name $subnet_name \
         --resource-group $RESOURCE_GROUP_NAME \
         --address-prefixes $address_prefix \
-        --vnet-name $VNET_NAME  \
-        --network-security-group $nsg_name \
+        --vnet-name $VNET_NAME \
         || (echo "FAILED TO CREATE SUBNET: $subnet_name" && exit 1)
 
     echo "CREATED SUBNET $subnet_name"
@@ -42,23 +39,63 @@ create_vnet () {
 
 create_nsg() {
 
-    local nsg_name=$1
+    local nsg_name="$1-nsg"
     
     echo "CREATING AN NSG: $nsg_name"
     
     az network nsg create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --name "$nsg_name" \
+        --name $nsg_name \
         --location $LOCATION \
         || (echo "FAILED TO CREATE NSG: $nsg_name" && exit 1)
-
 }
 
-attach_nsg_to_vm() {
+open_inbound_ports() {
 
-    local server_name=$1
-    local nsg_name="$server_name-nsg"
+    echo "OPENING INBOUND PORTS: $nsg_name"
+    
+    local nsg_name=$1
+    local priority=300
 
-    echo "ATTACHING AN NSG: $nsg_name"
+    for i in "${@:2}"
+    do
+        echo "Opening inbound port: $i"
 
+        az network nsg rule create \
+            --resource-group $RESOURCE_GROUP_NAME \
+            --nsg-name $nsg_name \
+            --name "open_$i" \
+            --protocol tcp \
+            --priority $priority \
+            --destination-port-range $i \
+            --direction Inbound \
+            || (echo "FAILED TO CREATE NSG Rule: $nsg_name" && exit 1)
+        
+         ((priority++))
+    done
+}
+
+open_inbound_ports() {
+
+    echo "OPENING INBOUND PORTS: $nsg_name"
+    
+    local nsg_name=$1
+    local priority=300
+
+    for i in "${@:2}"
+    do
+        echo "Opening inbound port: $i"
+
+        az network nsg rule create \
+            --resource-group $RESOURCE_GROUP_NAME \
+            --nsg-name $nsg_name \
+            --name "open_$i" \
+            --protocol tcp \
+            --priority $priority \
+            --destination-port-range $i \
+            --direction Outbound \
+            || (echo "FAILED TO CREATE NSG Rule: $nsg_name" && exit 1)
+        
+         ((priority++))
+    done
 }
