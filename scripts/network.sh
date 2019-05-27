@@ -4,7 +4,10 @@ create_subnet() {
     
     local subnet_name=$1
     local address_prefix=$2
-    local vnet_name=$3
+
+    local nsg_name="$subnet_name-nsg"
+
+    create_nsg $nsg_name
 
     echo "CREATING SUBNET $subnet_name"
 
@@ -12,8 +15,9 @@ create_subnet() {
         --name $subnet_name \
         --resource-group $RESOURCE_GROUP_NAME \
         --address-prefixes $address_prefix \
-        --vnet-name $vnet_name  \
-        || (echo "FAILED TO CREATE $subnet_name" && exit 1)
+        --vnet-name $VNET_NAME  \
+        --network-security-group $nsg_name \
+        || (echo "FAILED TO CREATE SUBNET: $subnet_name" && exit 1)
 
     echo "CREATED SUBNET $subnet_name"
 
@@ -39,11 +43,22 @@ create_vnet () {
 create_nsg() {
 
     local nsg_name=$1
-
+    
     echo "CREATING AN NSG: $nsg_name"
     
     az network nsg create \
-      --resource-group $RESOURCE_GROUP_NAME \
-      --name "$nsg_name" \
-      --location $LOCATION
+        --resource-group $RESOURCE_GROUP_NAME \
+        --name "$nsg_name" \
+        --location $LOCATION \
+        || (echo "FAILED TO CREATE NSG: $nsg_name" && exit 1)
+
+}
+
+attach_nsg_to_vm() {
+
+    local server_name=$1
+    local nsg_name="$server_name-nsg"
+
+    echo "ATTACHING AN NSG: $nsg_name"
+
 }
