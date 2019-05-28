@@ -36,8 +36,3 @@ open_outbound_ports "$server_name-nsg" 8080 8009 8005 8983 7983 2181 2888 3888 2
 
 attach_disk StandardSSD_LRS 32 "$PREFIX-01-srv" $server_name
 attach_disk StandardSSD_LRS 100 "$PREFIX-01-data" $server_name
-
-
-
-
-
