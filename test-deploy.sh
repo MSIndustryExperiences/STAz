@@ -20,8 +20,6 @@ create_admin_vm Standard_DS2_v2 $server_name "$PREFIX-admin-subnet" 32
 create_nsg "$server_name-nsg"
 
 open_inbound_ports "$server_name-nsg" 22 80 443 5666
-open_outbound_ports "$server_name-nsg" 22 80 443 5666
-
 
 attach_disk StandardSSD_LRS 32 "$PREFIX-srv" $server_name
 attach_disk StandardSSD_LRS 100 "$PREFIX-data" $server_name

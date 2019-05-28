@@ -7,5 +7,3 @@
 # az login
 
 delete_resource_group
-
-# might destroy network watcher. Have to look into it a bit more.
