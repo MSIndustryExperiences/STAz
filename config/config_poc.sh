@@ -10,4 +10,4 @@ RESOURCE_GROUP_NAME="$PREFIX-rg"
 
 VNET_NAME="$PREFIX-poc-vnet"
 
-VM_ADMIN_UID="hsimpson"
+VM_ADMIN_UID="cheri"
