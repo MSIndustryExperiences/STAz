@@ -39,48 +39,49 @@ create_vnet () {
 
 create_nsg() {
 
-    local nsg_name="$1-nsg"
+    local nsg_name=$1
     
     echo "CREATING AN NSG: $nsg_name"
     
     az network nsg create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --name $nsg_name \
+        --name "$nsg_name" \
         --location $LOCATION \
         || (echo "FAILED TO CREATE NSG: $nsg_name" && exit 1)
 }
 
 open_inbound_ports() {
-
-    echo "OPENING INBOUND PORTS: $nsg_name"
     
     local nsg_name=$1
     local priority=300
+    
+    echo "OPENING INBOUND PORTS: $nsg_name"
 
     for i in "${@:2}"
     do
         echo "Opening inbound port: $i"
 
         az network nsg rule create \
-            --resource-group $RESOURCE_GROUP_NAME \
-            --nsg-name $nsg_name \
-            --name "open_$i" \
-            --protocol tcp \
-            --priority $priority \
+            --access Allow \
             --destination-port-range $i \
             --direction Inbound \
+            --name "open_$i" \
+            --nsg-name $nsg_name \
+            --priority $priority \
+            --protocol tcp \
+            --resource-group $RESOURCE_GROUP_NAME \
             || (echo "FAILED TO CREATE NSG Rule: $nsg_name" && exit 1)
         
          ((priority++))
     done
 }
 
-open_inbound_ports() {
+open_outbound_ports() {
 
-    echo "OPENING INBOUND PORTS: $nsg_name"
+    echo "OPENING OUTBOUND PORTS: $nsg_name"
     
     local nsg_name=$1
-    local priority=300
+    local priority=340
 
     for i in "${@:2}"
     do
@@ -94,7 +95,7 @@ open_inbound_ports() {
             --priority $priority \
             --destination-port-range $i \
             --direction Outbound \
-            || (echo "FAILED TO CREATE NSG Rule: $nsg_name" && exit 1)
+            || (echo "FAILED TO CREATE NSG RULE: $nsg_name" && exit 1)
         
          ((priority++))
     done

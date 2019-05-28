@@ -4,7 +4,7 @@ CUSTOMER_NAME="sytrue"
 
 LOCATION="westus2" # the region where you want to deploy resources
 
-PREFIX="ec-$CUSTOMER_NAME" #prepended to resources
+PREFIX="ec0026-$CUSTOMER_NAME" #prepended to resources
 
 RESOURCE_GROUP_NAME="$PREFIX-rg"
 
