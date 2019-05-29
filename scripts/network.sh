@@ -75,28 +75,3 @@ open_inbound_ports() {
          ((priority++))
     done
 }
-
-open_outbound_ports() {
-
-    echo "OPENING OUTBOUND PORTS: $nsg_name"
-    
-    local nsg_name=$1
-    local priority=340
-
-    for i in "${@:2}"
-    do
-        echo "Opening inbound port: $i"
-
-        az network nsg rule create \
-            --resource-group $RESOURCE_GROUP_NAME \
-            --nsg-name $nsg_name \
-            --name "open_$i" \
-            --protocol tcp \
-            --priority $priority \
-            --destination-port-range $i \
-            --direction Outbound \
-            || (echo "FAILED TO CREATE NSG RULE: $nsg_name" && exit 1)
-        
-         ((priority++))
-    done
-}
