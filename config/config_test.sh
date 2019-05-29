@@ -7,6 +7,6 @@ VM_ADMIN_UID="cheri"
 PREFIX="t-$CUSTOMER_NAME" #prepended to resources
 ADMIN_SUBNET="$PREFIX-admin-subnet"
 RESOURCE_GROUP_NAME="$PREFIX-rg"
-VNET_NAME="$PREFIX-test-vnet"
+VNET_NAME="$PREFIX-vnet"
 WORKER_SUBNET="$PREFIX-worker-subnet"
 
