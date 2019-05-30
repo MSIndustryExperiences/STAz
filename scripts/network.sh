@@ -75,3 +75,30 @@ open_inbound_ports() {
          ((priority++))
     done
 }
+
+create_load_balancer() {
+    
+    local pip_name="$PREFIX-lb-pip"
+    local lb_name="$PREFIX-lb"
+
+    az network public-ip create \
+        --resource-group $RESOURCE_GROUP_NAME \
+        --name $pip_name \
+        --location $LOCATION \
+        --allocation-method Static \
+        --sku Basic
+
+    az network lb create \
+        --resource-group $RESOURCE_GROUP_NAME \
+        --name $lb_name \
+        --public-ip-address "51.143.57.113" \
+        --location $LOCATION
+    
+    # az network lb frontend-ip create \
+    #     -g $RESOURCE_GROUP_NAME \ -n MyFrontendIp --lb-name MyLb --public-ip-address MyFrontendIp
+
+    az network lb show \
+        --name $lb_name \
+        --resource-group $RESOURCE_GROUP_NAME
+        
+}
