@@ -82,6 +82,8 @@ create_worker_vm() {
 
     echo "CREATING VM: $vm_name"
 
+    echo "######## $vm-ip"
+
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
@@ -101,6 +103,27 @@ create_worker_vm() {
         --subnet $WORKER_SUBNET_NAME \
         --vnet-name $VNET_NAME  \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
+
+    # az vm create \
+    #     --name $vm_name \
+    #     --resource-group $RESOURCE_GROUP_NAME \
+    #     --admin-username $VM_ADMIN_UID \
+    #     --authentication-type ssh \
+    #     --data-disk-sizes-gb $app_disk_size $svr_disk_size \
+    #     --image CentOS \
+    #     --location $LOCATION \
+    #     --nsg "$vm_name-nsg" \
+    #     --nsg-rule SSH \
+    #     --os-disk-name $os_disk_name \
+    #     --os-disk-size-gb $os_disk_size \
+    #     --output table \
+    #     --private-ip-address $vm_ip \ 
+    #     --public-ip-address "" \
+    #     --size $vm_size \
+    #     --subnet $WORKER_SUBNET_NAME \
+    #     --vnet-name $VNET_NAME
+
+
 
     echo ">>>>>>>> CREATED WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
