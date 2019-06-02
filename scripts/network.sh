@@ -40,7 +40,7 @@ create_nsg() {
     
     az network nsg create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --name "$nsg_name" \
+        --name $nsg_name \
         --location $LOCATION \
         || (echo "FAILED TO CREATE NSG: $nsg_name" && exit 1)
 }
@@ -74,15 +74,15 @@ open_nsg_inbound_ports() {
 open_vm_inbound_ports() {
     
     local vm_name=$1
-    local priority=301
+    local priority=$2
     
     echo "OPENING INBOUND VM PORTS: $vm_name"
 
-    for i in "${@:2}"
+    for i in "${@:3}"
     do
         echo "Opening inbound port: $i"
 
-        az network nsg rule create \
+        az network vm rule create \
             --access Allow \
             --destination-port-range $i \
             --direction Inbound \
@@ -91,7 +91,7 @@ open_vm_inbound_ports() {
             --priority $priority \
             --protocol tcp \
             --resource-group $RESOURCE_GROUP_NAME \
-            || (echo "FAILED TO CREATE NSG Rule: $vm_name" && exit 1)
+            || (echo "FAILED TO CREATE VM RULE: $vm_name" && exit 1)
         
          ((priority++))
     done
