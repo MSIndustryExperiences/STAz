@@ -4,8 +4,16 @@ CUSTOMER_NAME="sytrue"
 LOCATION="westus2" # the region where you want to deploy resources
 VM_ADMIN_UID="cheri"
 
-PREFIX="eng-$CUSTOMER_NAME" #prepended to resources
-ADMIN_SUBNET="$PREFIX-admin-subnet"
+PREFIX="$CUSTOMER_NAME-00" #prepended to resources
+
+# Networking
+VNET_NAME="eng-$PREFIX-vnet"
+VNET_IP="10.2.0.0/16"
+
+ADMIN_SUBNET_NAME="$PREFIX-paw-subnet"
+ADMIN_SUBNET_IP="10.2.1.0/24"
+
+WORKER_SUBNET_NAME="$PREFIX-worker-subnet"
+WORKER_SUBNET_IP="10.2.2.0/24"
+
 RESOURCE_GROUP_NAME="$PREFIX-rg"
-VNET_NAME="$PREFIX-vnet"
-WORKER_SUBNET="$PREFIX-worker-subnet"
