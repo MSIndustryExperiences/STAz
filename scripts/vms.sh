@@ -71,38 +71,62 @@ create_test_worker_vm() {
     echo ">>>>>>>> CREATED TEST WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
 
-
 create_worker_vm() {
 
     echo ">>>>>>>> CREATING WORKER MACHINE <<<<<<<<<<<"
 
     local vm_size=$1
     local vm_name=$2
-    local os_disk_size=$3
-    local private_ip_address=$4
+    local vm_ip=$3
+    local os_disk_size=$4
+    local app_disk_size=$5
+    local svr_disk_size=$6
 
     local os_disk_name="$vm_name-os"
 
     echo "CREATING VM: $vm_name"
 
+    echo "######## $vm-ip"
+
     az vm create \
-        --admin-username $VM_WORKER_UID \
+        --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
-        --computer-name $vm-name \
-        --data-disk-sizes-gb 40 200 \
+        --data-disk-sizes-gb 40 100 \
         --image CentOS \
-        --location $LOCATION \
+        --generate-ssh-keys \
+        --name $vm_name \
         --nsg "$vm_name-nsg" \
         --nsg-rule SSH \
-        --os-disk-name $os_disk_name \
-        --os-disk-size-gb $os_disk_size \
+        --os-disk-name "$vm_name-os" \
+        --os-disk-size-gb 80 \
         --output table \
-        --private-ip-address $private_ip_address \ 
         --public-ip-address "" \
+        --private-ip-address $vm_ip \
         --resource-group $RESOURCE_GROUP_NAME \
-        --size $vm_size \
+        --size $1 \
         --subnet $WORKER_SUBNET_NAME \
         --vnet-name $VNET_NAME
+
+    # az vm create \
+    #     --name $vm_name \
+    #     --resource-group $RESOURCE_GROUP_NAME \
+    #     --admin-username $VM_ADMIN_UID \
+    #     --authentication-type ssh \
+    #     --data-disk-sizes-gb $app_disk_size $svr_disk_size \
+    #     --image CentOS \
+    #     --location $LOCATION \
+    #     --nsg "$vm_name-nsg" \
+    #     --nsg-rule SSH \
+    #     --os-disk-name $os_disk_name \
+    #     --os-disk-size-gb $os_disk_size \
+    #     --output table \
+    #     --private-ip-address $vm_ip \ 
+    #     --public-ip-address "" \
+    #     --size $vm_size \
+    #     --subnet $WORKER_SUBNET_NAME \
+    #     --vnet-name $VNET_NAME
+
+
 
     echo ">>>>>>>> CREATED WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
