@@ -74,10 +74,6 @@ create_test_worker_vm() {
 
 create_worker_vm() {
 
-    ###############################################
-    # NOT READY COMMENTED OUt UNTiL I GEt BACK HERE
-    ###############################################
-
     echo ">>>>>>>> CREATING WORKER MACHINE <<<<<<<<<<<"
 
     local vm_size=$1

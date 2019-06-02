@@ -9,10 +9,7 @@
 # the following line to log in at script execution time
 # az login
 
-
 create_resource_group
-
-# create_load_balancer
 
 # Create network
 create_vnet $VNET_NAME $VNET_IP
