@@ -33,16 +33,16 @@
 # create_vm Standard_D4s_v3 "$PREFIX-eng-04-vm" "$PREFIX-eng-subnet" $VNET_NAME_ENG "yes" 80 40 100 # seed, Solr, Tomcat
 # create_vm Standard_D4s_v3 "$PREFIX-eng-05-vm" "$PREFIX-eng-subnet" $VNET_NAME_ENG "" 80 40 100 # in availability set - Solr, Tomcat
 ##### create_vm Standard_DS1_v2 "$PREFIX-eng-06-vm" "$PREFIX-eng-subnet" $VNET_NAME_ENG "" 16 40 # nagios
-create_vm Standard_D8s_v3 "$PREFIX-eng-07-vm" "$PREFIX-eng-subnet" $VNET_NAME_ENG "" 16 40 400 # Nuance
+# create_vm Standard_D8s_v3 "$PREFIX-eng-07-vm" "$PREFIX-eng-subnet" $VNET_NAME_ENG "" 16 40 400 # Nuance
 
-echo "CREATING poc VMs"
-create_vm Standard_D4s_v3 "$PREFIX-poc-01-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # zk, Solr, Tomcat
+# echo "CREATING poc VMs"
+# create_vm Standard_D4s_v3 "$PREFIX-poc-01-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # zk, Solr, Tomcat
 # create_vm Standard_D4s_v3 "$PREFIX-poc-02-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # ActiveMQ
 # create_vm Standard_D4s_v3 "$PREFIX-poc-03-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 200 # Solr, MongoDB
 # create_vm Standard_D4s_v3 "$PREFIX-poc-04-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # seed, Solr, Tomcat
 # create_vm Standard_D4s_v3 "$PREFIX-poc-05-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # in availability set - Solr, Tomcat
-create_vm Standard_DS1_v2 "$PREFIX-poc-06-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # nagios
+# create_vm Standard_DS1_v2 "$PREFIX-poc-06-vm" "$PREFIX-poc-subnet" $VNET_NAME_POC "" 80 40 100 # nagios
 
-echo "CREATING test VM"
-create_vm Standard_D4s_v3 "$PREFIX-poc-01-vm" "$PREFIX-poc-subnet" $VNET_NAME_TEST "" 80 40 320 # eveything
+# echo "CREATING test VM"
+# create_vm Standard_D4s_v3 "$PREFIX-poc-01-vm" "$PREFIX-poc-subnet" $VNET_NAME_TEST "" 80 40 320 # eveything
 

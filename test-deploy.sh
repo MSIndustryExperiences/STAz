@@ -14,9 +14,11 @@ create_resource_group
 
 # create_load_balancer
 
-create_vnet $VNET_NAME 10.1.0.0/16
-create_subnet $ADMIN_SUBNET 10.1.1.0/24
-create_subnet $WORKER_SUBNET 10.1.2.0/24
+# Create network
+create_vnet $VNET_NAME $VNET_IP
+create_subnet $ADMIN_SUBNET_NAME $ADMIN_SUBNET_IP
+create_subnet $WORKER_SUBNET_NAME $WORKER_SUBNET_IP
 
-create_admin_vm
-create_test_worker_vm
+# create VMs
+create_admin_vm "10.1.1.5"
+create_test_worker_vm "10.1.2.5"

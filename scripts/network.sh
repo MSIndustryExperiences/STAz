@@ -5,8 +5,6 @@ create_subnet() {
     local subnet_name=$1
     local address_prefix=$2
 
-    local nsg_name="$subnet_name"
-
     echo "CREATING SUBNET $subnet_name"
 
     az network vnet subnet create \
@@ -22,19 +20,16 @@ create_subnet() {
 
 create_vnet () {
 
-    local vnet_name=$1
-    local address_prefixes=$2
-
-    echo "CREATING VNET $vnet_name"
+    echo "CREATING VNET $VNET_NAME"
 
     az network vnet create \
-        --name $vnet_name \
+        --name $VNET_NAME \
         --resource-group $RESOURCE_GROUP_NAME \
-        --address-prefixes $address_prefixes \
+        --address-prefixes $VNET_IP \
         --location $LOCATION \
          || (echo "FAILED TO CREATE $vnet_name" && exit 1)
 
-    echo "CREATED VNET $vnet_name"
+    echo "CREATED VNET $VNET_NAME"
 }
 
 create_nsg() {
@@ -50,12 +45,12 @@ create_nsg() {
         || (echo "FAILED TO CREATE NSG: $nsg_name" && exit 1)
 }
 
-open_inbound_ports() {
+open_nsg_inbound_ports() {
     
     local nsg_name=$1
     local priority=300
     
-    echo "OPENING INBOUND PORTS: $nsg_name"
+    echo "OPENING INBOUND NSG PORTS: $nsg_name"
 
     for i in "${@:2}"
     do
@@ -76,6 +71,33 @@ open_inbound_ports() {
     done
 }
 
+open_vm_inbound_ports() {
+    
+    local vm_name=$1
+    local priority=301
+    
+    echo "OPENING INBOUND VM PORTS: $vm_name"
+
+    for i in "${@:2}"
+    do
+        echo "Opening inbound port: $i"
+
+        az network nsg rule create \
+            --access Allow \
+            --destination-port-range $i \
+            --direction Inbound \
+            --name "open_$i" \
+            --nsg-name $nsg_name \
+            --priority $priority \
+            --protocol tcp \
+            --resource-group $RESOURCE_GROUP_NAME \
+            || (echo "FAILED TO CREATE NSG Rule: $vm_name" && exit 1)
+        
+         ((priority++))
+    done
+}
+
+
 create_load_balancer() {
     
     local pip_name="$PREFIX-lb-pip"
@@ -86,7 +108,8 @@ create_load_balancer() {
         --name $pip_name \
         --location $LOCATION \
         --allocation-method Static \
-        --sku Basic
+        --public-ip-address-allocation static \
+        --sku Standard
 
     az network lb create \
         --resource-group $RESOURCE_GROUP_NAME \
@@ -94,9 +117,6 @@ create_load_balancer() {
         --public-ip-address "51.143.57.113" \
         --location $LOCATION
     
-    # az network lb frontend-ip create \
-    #     -g $RESOURCE_GROUP_NAME \ -n MyFrontendIp --lb-name MyLb --public-ip-address MyFrontendIp
-
     az network lb show \
         --name $lb_name \
         --resource-group $RESOURCE_GROUP_NAME
