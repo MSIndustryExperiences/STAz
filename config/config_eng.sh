@@ -1,7 +1,7 @@
 echo "LOADING CONFIG"
 
 CUSTOMER_NAME="sytrue"
-LOCATION="westus2" # the region where you want to deploy resources
+LOCATION="eastus" # the region where you want to deploy resources
 VM_ADMIN_UID="cheri"
 
 PREFIX="$CUSTOMER_NAME-00" #prepended to resources
