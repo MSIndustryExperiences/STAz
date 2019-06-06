@@ -7,6 +7,8 @@ create_admin_vm() {
 
     echo ">>>>>>>> CREATING ADMIN MACHINE $vm_name <<<<<<<<<<<"
 
+    # --ssh-dest-key-path "./certs" \
+    # 
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
@@ -24,9 +26,9 @@ create_admin_vm() {
         --public-ip-address-allocation static \
         --public-ip-sku Standard \
         --resource-group $RESOURCE_GROUP_NAME \
-        --size Standard_DS2_v2 \
         --subnet $ADMIN_SUBNET_NAME \
-        --vnet-name $VNET_NAME
+        --vnet-name $VNET_NAME \
+        || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
 
     echo ">>>>>>>> CREATED ADMIN VM: $vm_name <<<<<<<<<<<"
 }
@@ -55,15 +57,10 @@ create_test_worker_vm() {
         --resource-group $RESOURCE_GROUP_NAME \
         --size Standard_DS2_v2 \
         --subnet $WORKER_SUBNET_NAME \
-        --vnet-name $VNET_NAME
+        --vnet-name $VNET_NAME  \
+        || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
 
-
-
-
-    # create_worker_vm Standard_DS2_v2 $vm_name $private_ip_address 32
-
-    # create_nsg "$vm_name-nsg"
-    open_nsg_inbound_ports "$vm_name-nsg" 22 8080 8009 8005 8983 7983 2181 2888 3888 27017 1802 1099 2099 8161 5666
+    open_vm_inbound_ports "$vm_name-nsg" 22 8080 8009 8005 8983 7983 2181 2888 3888 27017 1802 1099 2099 8161 5666
 
     # attach_disk StandardSSD_LRS "$PREFIX-01-srv" $vm_name 32
     # attach_disk StandardSSD_LRS "$PREFIX-01-data" $vm_name 100
@@ -86,47 +83,27 @@ create_worker_vm() {
 
     echo "CREATING VM: $vm_name"
 
-    echo "######## $vm-ip"
+    echo "IP: $vm_name-ip"
 
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
-        --data-disk-sizes-gb 40 100 \
+        --data-disk-sizes-gb $app_disk_size $svr_disk_size \
         --image CentOS \
         --generate-ssh-keys \
         --name $vm_name \
         --nsg "$vm_name-nsg" \
         --nsg-rule SSH \
         --os-disk-name "$vm_name-os" \
-        --os-disk-size-gb 80 \
+        --os-disk-size-gb $os_disk_size \
         --output table \
         --public-ip-address "" \
         --private-ip-address $vm_ip \
         --resource-group $RESOURCE_GROUP_NAME \
         --size $1 \
         --subnet $WORKER_SUBNET_NAME \
-        --vnet-name $VNET_NAME
-
-    # az vm create \
-    #     --name $vm_name \
-    #     --resource-group $RESOURCE_GROUP_NAME \
-    #     --admin-username $VM_ADMIN_UID \
-    #     --authentication-type ssh \
-    #     --data-disk-sizes-gb $app_disk_size $svr_disk_size \
-    #     --image CentOS \
-    #     --location $LOCATION \
-    #     --nsg "$vm_name-nsg" \
-    #     --nsg-rule SSH \
-    #     --os-disk-name $os_disk_name \
-    #     --os-disk-size-gb $os_disk_size \
-    #     --output table \
-    #     --private-ip-address $vm_ip \ 
-    #     --public-ip-address "" \
-    #     --size $vm_size \
-    #     --subnet $WORKER_SUBNET_NAME \
-    #     --vnet-name $VNET_NAME
-
-
+        --vnet-name $VNET_NAME  \
+        || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
 
     echo ">>>>>>>> CREATED WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
@@ -146,7 +123,8 @@ attach_disk() {
         --size-gb $disk_capacity \
         --sku $disk_sku \
         --vm-name $vm_name \
-        --new
+        --new  \
+        || (echo "FAILED TO ATTACH DISK: $vm_name" && exit 1)
 
     echo "DISK ATTACHED: $disk_name"
 

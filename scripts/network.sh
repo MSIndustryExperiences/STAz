@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 create_subnet() {
     
@@ -32,19 +32,6 @@ create_vnet () {
     echo "CREATED VNET $VNET_NAME"
 }
 
-create_nsg() {
-
-    local nsg_name=$1
-    
-    echo "CREATING AN NSG: $nsg_name"
-    
-    az network nsg create \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --name "$nsg_name" \
-        --location $LOCATION \
-        || (echo "FAILED TO CREATE NSG: $nsg_name" && exit 1)
-}
-
 open_nsg_inbound_ports() {
     
     local nsg_name=$1
@@ -74,51 +61,25 @@ open_nsg_inbound_ports() {
 open_vm_inbound_ports() {
     
     local vm_name=$1
-    local priority=301
+    local priority=$2
     
     echo "OPENING INBOUND VM PORTS: $vm_name"
 
-    for i in "${@:2}"
+    for i in "${@:3}"
     do
         echo "Opening inbound port: $i"
 
-        az network nsg rule create \
+        az network vm rule create \
             --access Allow \
             --destination-port-range $i \
             --direction Inbound \
             --name "open_$i" \
-            --nsg-name $nsg_name \
+            --nsg-name "$vm_name-nsg" \
             --priority $priority \
             --protocol tcp \
             --resource-group $RESOURCE_GROUP_NAME \
-            || (echo "FAILED TO CREATE NSG Rule: $vm_name" && exit 1)
+            || (echo "FAILED TO CREATE VM RULE: $vm_name" && exit 1)
         
          ((priority++))
     done
-}
-
-
-create_load_balancer() {
-    
-    local pip_name="$PREFIX-lb-pip"
-    local lb_name="$PREFIX-lb"
-
-    az network public-ip create \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --name $pip_name \
-        --location $LOCATION \
-        --allocation-method Static \
-        --public-ip-address-allocation static \
-        --sku Standard
-
-    az network lb create \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --name $lb_name \
-        --public-ip-address "51.143.57.113" \
-        --location $LOCATION
-    
-    az network lb show \
-        --name $lb_name \
-        --resource-group $RESOURCE_GROUP_NAME
-        
 }
