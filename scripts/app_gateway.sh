@@ -1,20 +1,16 @@
 create_app_gateway() {
 
-
     local private_ip=$1
-    local pip_name="$PREFIX-gw-pip"
+    local pip_name=$2
 
     echo "CREATING PUBLIC IP FOR GW"
 
     az network public-ip create \
-        --name $pip_name \
+        --name $public_ip_name \
         --resource-group $RESOURCE_GROUP_NAME \
         --location $LOCATION \
         --allocation-method Static \
         --sku Standard
-
-    echo "PUBLIC IP FOR GW: $pip_name"
-
 
     echo "CREATING GATEWAY"
 
@@ -27,10 +23,10 @@ create_app_gateway() {
         --http-settings-protocol Http \
         --location $LOCATION \
         --name "$PREFIX-gw" \
-        --private-ip-address $private_ip \
-        --public-ip-address $pip_name \
+        --private-ip-address $pip_name \
+        --public-ip-address public_ip_name
         --public-ip-address-allocation Static \
-        --servers "10.2.2.10" "10.2.2.11" "10.2.2.12" \
+        --servers "10.2.2.10" "10.2.2.11" "10.2.2.17" "10.2.2.18" \
         --sku Standard_v2 \
         --subnet $GATEWAY_SUBNET_NAME \
         --vnet-name $VNET_NAME \

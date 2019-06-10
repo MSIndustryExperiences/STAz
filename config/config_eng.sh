@@ -4,7 +4,7 @@ CUSTOMER_NAME="sytrue"
 LOCATION="westus2" # the region where you want to deploy resources
 VM_ADMIN_UID="cheri"
 
-PREFIX="$CUSTOMER_NAME-02" #prepended to resources
+PREFIX="$CUSTOMER_NAME-00" #prepended to resources
 
 # Networking
 

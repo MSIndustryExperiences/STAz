@@ -15,7 +15,6 @@ create_subnet() {
         || (echo "FAILED TO CREATE SUBNET: $subnet_name" && exit 1)
 
     echo "CREATED SUBNET $subnet_name"
-
 }
 
 create_vnet () {
