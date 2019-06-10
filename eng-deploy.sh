@@ -45,4 +45,4 @@ open_nsg_inbound_ports "$PREFIX-eng-07-vm-nsg" 8983 7983 8080 8009 8005 # Solr, 
 # open_nsg_inbound_ports "$PREFIX-eng-08-vm-nsg" # don't know
 open_nsg_inbound_ports "$PREFIX-eng-09-vm-nsg" 5666 # nagios, nrpe
 
-create_app_gateway "10.2.3.5"
+# create_app_gateway "10.2.3.5"
