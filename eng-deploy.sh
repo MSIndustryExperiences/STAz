@@ -6,10 +6,11 @@ set -e
 # create a smaller group of machines for
 # development and testing purposes.
 # Uncomment them if you want to install the whole
-# solution
+# solution. 
 # 
-# You must also update the achine IPs in creating 
-# the resoure group.
+# Remember to open ports on the same machine
+# app gateway creation shoud you change them.
+# will find a better solution for this (array as arg)
 #############################################
 
 . ./config/config_eng.sh

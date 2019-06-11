@@ -68,7 +68,19 @@ open_vm_inbound_ports() {
     do
         echo "Opening inbound port: $i"
 
-        az network vm rule create \
+        #########################
+        # TODO: Try replacing the following with:
+        # az vm open-port --port
+        #         [--apply-to-subnet]
+        #         [--ids]
+        #         [--name]
+        #         [--nsg-name]
+        #         [--priority]
+        #         [--resource-group]
+        #         [--subscription]
+        #########################
+        
+        az network rule create \
             --access Allow \
             --destination-port-range $i \
             --direction Inbound \

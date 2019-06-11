@@ -2,7 +2,7 @@ echo "LOADING CONFIG"
 
 CUSTOMER_NAME="sytrue"
 LOCATION="westus2" # the region where you want to deploy resources
-VM_ADMIN_UID="cheri"
+VM_ADMIN_UID="centos"
 
 PREFIX="$CUSTOMER_NAME-01" #prepended to resources
 
