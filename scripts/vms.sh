@@ -132,11 +132,10 @@ open_inbound_ports() {
     for i in "${@:2}"
     do
 
-        echo "CREATING INBOUND NSG PORTS: $nsg_name + "
+        echo "CREATING INBOUND NSG: $nsg_name + "
         az network nsg create --name $nsg_name --resource-group $RESOURCE_GROUP_NAME
-
+        
         echo "Opening NSG inbound port: $i"
-        echo "priority-$priority"
 
         az network nsg rule create \
             --access Allow \
@@ -165,8 +164,9 @@ open_inbound_ports() {
     done
 }
 
+#may no nolger be need
 open_nsg_inbound_ports() {
-    
+
     local nsg_name=$1
     local priority=300
     

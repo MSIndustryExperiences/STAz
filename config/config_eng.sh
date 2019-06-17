@@ -4,7 +4,7 @@ CUSTOMER_NAME="st"
 LOCATION="westus2" # the region where you want to deploy resources
 VM_ADMIN_UID="centos"
 
-PREFIX="dms-$CUSTOMER_NAME-01" #prepended to resources
+PREFIX="dms-$CUSTOMER_NAME-00" #prepended to resources
 
 # Networking
 

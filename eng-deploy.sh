@@ -23,15 +23,15 @@ set -e
 # Sign in on the command line with this command or uncomment this line
 # az login
 
-# create_resource_group
+create_resource_group
 
-# echo "CREATING NETWORK"
+echo "CREATING NETWORK"
 
-# create_vnet $VNET_NAME $VNET_IP
+create_vnet $VNET_NAME $VNET_IP
 
-# create_subnet $ADMIN_SUBNET_NAME $ADMIN_SUBNET_IP
-# create_subnet $GATEWAY_SUBNET_NAME $GATEWAY_SUBNET_IP
-# create_subnet $WORKER_SUBNET_NAME $WORKER_SUBNET_IP
+create_subnet $ADMIN_SUBNET_NAME $ADMIN_SUBNET_IP
+create_subnet $GATEWAY_SUBNET_NAME $GATEWAY_SUBNET_IP
+create_subnet $WORKER_SUBNET_NAME $WORKER_SUBNET_IP
 
 # create_scale_set "$PREFIX-backend-ss" $GATEWAY_SUBNET_NAME
 
@@ -63,6 +63,9 @@ open_inbound_ports "$PREFIX-01" 80 8009 8005 2181 8983 7983 2888 3888 # FRONT EN
 # open_inbound_ports "$PREFIX-07-vm-nsg" 8983 7983 8080 8009 8005 # Solr, Tomcat
 # open_inbound_ports "$PREFIX-08-vm-nsg" # don't know
 # open_inbound_ports "$PREFIX-09-vm-nsg" 5666 # nagios, nrpe
+
+
+
 
 
 
