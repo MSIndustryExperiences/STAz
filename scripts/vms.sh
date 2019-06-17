@@ -8,7 +8,8 @@ create_admin_vm() {
 
     echo ">>>>>>>> CREATING ADMIN MACHINE $vm_name <<<<<<<<<<<"
 
-    # --public-ip-address "" \
+    # --ssh-dest-key-path "./certs" \
+    # 
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
@@ -28,7 +29,6 @@ create_admin_vm() {
         --subnet $ADMIN_SUBNET_NAME \
         --vnet-name $VNET_NAME \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
-    
     echo ">>>>>>>> CREATED ADMIN VM: $vm_name <<<<<<<<<<<"
 }
 
@@ -59,6 +59,11 @@ create_test_worker_vm() {
         --vnet-name $VNET_NAME  \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
 
+    open_vm_inbound_ports "$vm_name-nsg" 22 8080 8009 8005 8983 7983 2181 2888 3888 27017 1802 1099 2099 8161 5666
+
+    # attach_disk StandardSSD_LRS "$PREFIX-01-srv" $vm_name 32
+    # attach_disk StandardSSD_LRS "$PREFIX-01-data" $vm_name 100
+
     echo ">>>>>>>> CREATED TEST WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
 
@@ -76,6 +81,8 @@ create_worker_vm() {
     local os_disk_name="$vm_name-os"
 
     echo "CREATING VM: $vm_name"
+
+    echo "IP: $vm_name-ip"
 
     az vm create \
         --admin-username $VM_ADMIN_UID \
