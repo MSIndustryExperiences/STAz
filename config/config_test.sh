@@ -1,10 +1,10 @@
 echo "LOADING CONFIG"
 
 CUSTOMER_NAME="sytrue"
-LOCATION="eastus" # the region where you want to deploy resources
-VM_ADMIN_UID="cheri"
+LOCATION="westus2" # the region where you want to deploy resources
+VM_ADMIN_UID="centos"
 
-PREFIX="$CUSTOMER_NAME-01" #prepended to resources
+PREFIX="$CUSTOMER_NAME-10" #prepended to resources
 
 # Networking
 VNET_NAME="$PREFIX-vnet"
