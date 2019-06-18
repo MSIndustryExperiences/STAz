@@ -29,6 +29,7 @@ create_admin_vm() {
         --subnet $ADMIN_SUBNET_NAME \
         --vnet-name $VNET_NAME \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
+
     echo ">>>>>>>> CREATED ADMIN VM: $vm_name <<<<<<<<<<<"
 }
 
@@ -131,10 +132,11 @@ attach_disk() {
 
 open_inbound_ports() {
     
-    local vm_name="$1-vm"
-
+    local vm_name=$1
+    local ip_address=$2
+    
+    local priority=350
     local nsg_name="$vm_name-nsg"
-    local priority=400
         
     for i in "${@:2}"
     do
@@ -171,9 +173,8 @@ open_inbound_ports() {
     done
 }
 
-#may no nolger be need
 open_nsg_inbound_ports() {
-
+    
     local nsg_name=$1
     local priority=300
     
@@ -197,4 +198,29 @@ open_nsg_inbound_ports() {
          ((priority++))
     done
 }
+
+open_vm_inbound_ports() {
+    
+    local vm_name=$1
+    local priority=$2
+    
+    echo "OPENING INBOUND VM PORTS: $vm_name"
+
+    for i in "${@:3}"
+    do
+        echo "Opening inbound port: $i"
+
+        az vm open-port \
+            --port $i \
+            --name $vm_name \
+            --nsg-name "$vm_name-nsg" \
+            --priority $priority \
+            --resource-group $RESOURCE_GROUP_NAME \
+            || (echo "FAILED TO CREATE VM RULE: $vm_name" && exit 1)
+        
+         ((priority++))
+    done
+}
+
+\
 
