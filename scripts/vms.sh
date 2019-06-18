@@ -38,14 +38,13 @@ create_test_worker_vm() {
     echo ">>>>>>>> CREATING TEST WORKER MACHINE <<<<<<<<<<<"
 
     local private_ip_address=$1
-    local vm_name="$PREFIX-worker-vm"
+    local vm_name=$2
 
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
         --data-disk-sizes-gb 40 100 \
         --image CentOS \
-        # --generate-ssh-keys \
         --name $vm_name \
         --nsg "$vm_name-nsg" \
         --nsg-rule SSH \
@@ -59,11 +58,6 @@ create_test_worker_vm() {
         --subnet $WORKER_SUBNET_NAME \
         --vnet-name $VNET_NAME  \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
-
-    open_vm_inbound_ports "$vm_name-nsg" 22 8080 8009 8005 8983 7983 2181 2888 3888 27017 1802 1099 2099 8161 5666
-
-    # attach_disk StandardSSD_LRS "$PREFIX-01-srv" $vm_name 32
-    # attach_disk StandardSSD_LRS "$PREFIX-01-data" $vm_name 100
 
     echo ">>>>>>>> CREATED TEST WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
@@ -176,11 +170,11 @@ open_inbound_ports() {
 open_nsg_inbound_ports() {
     
     local nsg_name=$1
-    local priority=300
+    local priority=$2
     
     echo "OPENING INBOUND NSG PORTS: $nsg_name"
 
-    for i in "${@:2}"
+    for i in "${@:3}"
     do
         echo "Opening inbound port: $i"
 

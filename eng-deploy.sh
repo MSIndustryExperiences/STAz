@@ -46,12 +46,12 @@ open_vm_inbound_ports "$PREFIX-eng-02-vm" 350 80 8009 8005 2181 8983 7983 2888 3
 # open_vm_inbound_ports "$PREFIX-eng-09-vm" 350 5666
 
 echo "OPENING NSG PORTS"
-open_nsg_inbound_ports "$PREFIX-eng-01-vm-nsg" 80 8009 8005 2181 8983 7983 2888 3888 # FRONT END - zk, Solr, Tomcat
-open_nsg_inbound_ports "$PREFIX-eng-02-vm-nsg" 80 8009 8005 2181 8983 7983 2888 3888 # FRONT END - zk, Solr, Tomcat
-# open_nsg_inbound_ports "$PREFIX-eng-03-vm-nsg" 80 8009 8005 2181 8983 7983 2888 3888 # FRONT END - zk, Solr, Tomcat
-# open_nsg_inbound_ports "$PREFIX-eng-04-vm-nsg" 1802 1801 1099 2099 8161 # ActiveMQ
-# open_nsg_inbound_ports "$PREFIX-eng-05-vm-nsg" 8983 7983 27017 # Solr, MongoDB
-# open_nsg_inbound_ports "$PREFIX-eng-06-vm-nsg" 8983 7983 8080 8009 8005 # seed, Solr, Tomcat
-# open_nsg_inbound_ports "$PREFIX-eng-07-vm-nsg" 8983 7983 8080 8009 8005 # Solr, Tomcat
+open_nsg_inbound_ports "$PREFIX-eng-01-vm-nsg" 300 80 8009 8005 2181 8983 7983 2888 3888 # FRONT END - zk, Solr, Tomcat
+open_nsg_inbound_ports "$PREFIX-eng-02-vm-nsg" 300 80 8009 8005 2181 8983 7983 2888 3888 # FRONT END - zk, Solr, Tomcat
+# open_nsg_inbound_ports "$PREFIX-eng-03-vm-nsg" 300 80 8009 8005 2181 8983 7983 2888 3888 # FRONT END - zk, Solr, Tomcat
+# open_nsg_inbound_ports "$PREFIX-eng-04-vm-nsg" 300 1802 1801 1099 2099 8161 # ActiveMQ
+# open_nsg_inbound_ports "$PREFIX-eng-05-vm-nsg" 300 8983 7983 27017 # Solr, MongoDB
+# open_nsg_inbound_ports "$PREFIX-eng-06-vm-nsg" 300 8983 7983 8080 8009 8005 # seed, Solr, Tomcat
+# open_nsg_inbound_ports "$PREFIX-eng-07-vm-nsg" 300 8983 7983 8080 8009 8005 # Solr, Tomcat
 # # open_nsg_inbound_ports "$PREFIX-eng-08-vm-nsg" # don't know
-# open_nsg_inbound_ports "$PREFIX-eng-09-vm-nsg" 5666 # nagios, nrpe
+# open_nsg_inbound_ports "$PREFIX-eng-09-vm-nsg" 300 5666 # nagios, nrpe
