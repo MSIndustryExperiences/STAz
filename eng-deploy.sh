@@ -25,7 +25,6 @@ echo "CREATING JUMPBOX"
 create_admin_vm "10.2.1.5"
 
 echo "CREATING WORKER VMs"
-
 create_worker_vm Standard_D4s_v3 "$PREFIX-eng-01-vm" "10.2.2.10" 80 40 100 # FRONT END - zk, Solr, Tomcat
 create_worker_vm Standard_D4s_v3 "$PREFIX-eng-02-vm" "10.2.2.11" 80 40 100 # FRONT END - zk, Solr, Tomcat
 # create_worker_vm Standard_D4s_v3 "$PREFIX-eng-03-vm" "10.2.2.12" 80 40 100 # FRONT END - zk, Solr, Tomcat
@@ -35,9 +34,6 @@ create_worker_vm Standard_D4s_v3 "$PREFIX-eng-02-vm" "10.2.2.11" 80 40 100 # FRO
 # create_worker_vm Standard_D4s_v3 "$PREFIX-eng-07-vm" "10.2.2.16" 80 40 100 # Solr, Tomcat
 # create_worker_vm Standard_D8s_v3 "$PREFIX-eng-08-vm" "10.2.2.17" 32 40 400 # Nuance
 # create_worker_vm Standard_DS1_v2 "$PREFIX-eng-09-vm" "10.2.2.18" 32 40 # nagios, nrpe
-
-echo "OPENING VM PORTS"
-
 
 echo "OPENING VM PORTS"
 open_vm_inbound_ports "$PREFIX-eng-01-vm" 350 80 8009 8005 2181 8983 7983 2888 3888
