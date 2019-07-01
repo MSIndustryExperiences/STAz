@@ -100,28 +100,6 @@ create_worker_vm() {
     echo ">>>>>>>> CREATED WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
 
-attach_disk() {
-
-    local disk_sku=$1
-    local disk_name=$2
-    local vm_name=$3
-    local disk_capacity=$4
-
-    echo "ATTACHING DISK: $disk_name"
-
-    az vm disk attach \
-        --name $disk_name \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --size-gb $disk_capacity \
-        --sku $disk_sku \
-        --vm-name $vm_name \
-        --new  \
-        || (echo "FAILED TO ATTACH DISK: $vm_name" && exit 1)
-
-    echo "DISK ATTACHED: $disk_name"
-
-}
-
 open_inbound_ports() {
     
     local vm_name=$1

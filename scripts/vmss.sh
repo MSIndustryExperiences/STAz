@@ -28,21 +28,21 @@ create_scale_set() {
     echo "az monitor autoscale create"
     az monitor autoscale create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --resource $PREFIX-vmss \
+        --resource "$PREFIX-vmss" \
         --resource-type Microsoft.Compute/virtualMachineScaleSets \
         --name "${PREFIX}AutoscaleProfile" \
         --min-count 2 \
         --max-count 10 \
         --count 2
         
-    echo "az monitor autoscale rule create"
+    echo "az monitor autoscale rule create (in)"
     az monitor autoscale rule create \
         --resource-group $RESOURCE_GROUP_NAME \
         --autoscale-name "${PREFIX}AutoscaleProfile" \
         --condition "Percentage CPU < 20 avg 5m" \
         --scale in 1
 
-    echo "az monitor autoscale rule create"
+    echo "az monitor autoscale rule create (out)"
     az monitor autoscale rule create \
         --resource-group $RESOURCE_GROUP_NAME \
         --autoscale-name "${PREFIX}AutoscaleProfile" \
