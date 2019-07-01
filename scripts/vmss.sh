@@ -58,7 +58,7 @@ create_vmss_image() {
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
         --data-disk-sizes-gb 40 100 \
-        --image $VMSS_VM_IMAGE_NAME \
+        --image CentOS \
         --generate-ssh-keys \
         --name $vm_name \
         --os-disk-name "$vm_name-os" \
