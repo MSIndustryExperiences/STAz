@@ -8,8 +8,6 @@ create_admin_vm() {
 
     echo ">>>>>>>> CREATING ADMIN MACHINE $vm_name <<<<<<<<<<<"
 
-    # --ssh-dest-key-path "./certs" \
-    # 
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
