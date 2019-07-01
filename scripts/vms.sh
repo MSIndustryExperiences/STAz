@@ -19,7 +19,7 @@ create_admin_vm() {
         --nsg-rule SSH \
         --os-disk-name "$vm_name-os" \
         --os-disk-size-gb 32 \
-        --output table \
+        --output json \
         --private-ip-address $private_ip_address \
         --public-ip-address-allocation static \
         --public-ip-sku Standard \
