@@ -5,26 +5,41 @@ create_scale_set() {
 
     local image_name=$1
 
-    echo "CREATING VMSS"
+    # echo "CREATING VMSS"
 
-    az vmss create \
-        -n "$PREFIX-vmss" \
-        -g $RESOURCE_GROUP_NAME \
-        --image $VMSS_VM_IMAGE_NAME \
-        --instance-count 2 \
-        --load-balancer "" \
-        --public-ip-address "" \
-        --subnet $WORKER_SUBNET_NAME \
-        --vnet-name $VNET_NAME \
-        --generate-ssh-keys \
-        --authentication-type ssh \
-        --admin-username $VM_ADMIN_UID \
-        --upgrade-policy-mode Automatic
+    # az vmss create \
+    #     -n "$PREFIX-vmss" \
+    #     -g $RESOURCE_GROUP_NAME \
+    #     --image $VMSS_VM_IMAGE_NAME \
+    #     --instance-count 2 \
+    #     --load-balancer "" \
+    #     --public-ip-address "" \
+    #     --subnet $WORKER_SUBNET_NAME \
+    #     --vnet-name $VNET_NAME \
+    #     --generate-ssh-keys \
+    #     --authentication-type ssh \
+    #     --admin-username $VM_ADMIN_UID \
+    #     --upgrade-policy-mode Automatic
 
     #############################
     # CREATE AUTOSCALE PROFILE
     # AND RULES
     #############################
+    echo "az monitor autoscale rule create"
+    az monitor autoscale rule create \
+        --resource-group $RESOURCE_GROUP_NAME \
+        --autoscale-name "${PREFIX}AutoscaleProfile" \
+        --condition "Percentage CPU > 50 avg 5m" \
+        --scale out 1
+
+    echo "az monitor autoscale rule create"
+    az monitor autoscale rule create \
+        --resource-group $RESOURCE_GROUP_NAME \
+        --autoscale-name autoscale \
+        --condition "Percentage CPU < 20 avg 5m" \
+        --scale in 1
+
+    echo "az monitor autoscale create"
     az monitor autoscale create \
         --resource-group $RESOURCE_GROUP_NAME \
         --resource $PREFIX-vmss \
@@ -33,18 +48,6 @@ create_scale_set() {
         --min-count 2 \
         --max-count 10 \
         --count 2
-
-    az monitor autoscale rule create \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --autoscale-name "${PREFIX}AutoscaleProfile" \
-        --condition "Percentage CPU > 50 avg 5m" \
-        --scale out 1
-
-    az monitor autoscale rule create \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --autoscale-name autoscale \
-        --condition "Percentage CPU < 20 avg 5m" \
-        --scale in 1
 }
 
 create_vmss_image() {
