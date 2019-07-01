@@ -74,8 +74,7 @@ create_app_gateway() {
         --frontend-port port80 \
         --gateway-name $app_gw_name \
         --name port80Listener \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --frontend-ip $pip_name
+        --resource-group $RESOURCE_GROUP_NAME
 
     echo "az network application-gateway http-listener list"
     az network application-gateway http-listener list \
@@ -96,8 +95,8 @@ create_app_gateway() {
 
     echo "az network application-gateway rule show"
     az network application-gateway rule show \
-        --gateway-name $app_gw_name
-    
-
+        --name ruleHttp \
+        --gateway-name $app_gw_name \
+        --resource-group $RESOURCE_GROUP_NAME
     echo "CREATED GATEWAY"
 }
