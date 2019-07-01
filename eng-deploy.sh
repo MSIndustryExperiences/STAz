@@ -25,6 +25,8 @@ create_subnet $WORKER_SUBNET_NAME $WORKER_SUBNET_IP
 echo "CREATING JUMPBOX"
 create_admin_vm "10.2.1.5"
 
+create_scale_set
+
 echo "CREATING WORKER VMs"
 create_worker_vm Standard_D4s_v3 "$PREFIX-01-vm" "10.2.2.10" 80 40 100 # FRONT END - zk, Solr, Tomcat
 create_worker_vm Standard_D4s_v3 "$PREFIX-02-vm" "10.2.2.11" 80 40 100 # FRONT END - zk, Solr, Tomcat
@@ -58,4 +60,3 @@ then
     create_vmss_image 
 fi
 
-create_scale_set $VMSS_VM_IMAGE_NAME

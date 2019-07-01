@@ -14,7 +14,7 @@ function create_scale_set() {
         --lb-sku Standard \
         --load-balancer "$PREFIX-gw" \
         --location $LOCATION \
-        --name $ss_name \
+        --name $VMSS_VM_IMAGE_NAME \
         --priority Regular \
         --public-ip-address "" \
         --resource-group $RESOURCE_GROUP_NAME \
@@ -30,15 +30,4 @@ function create_scale_set() {
         --resource-group $RESOURCE_GROUP_NAME
 
     echo "CREATED SCALE SET"
-
-    # az network lb rule create \
-    #     --admin-username $VM_ADMIN_UID
-    #     --resource-group $RESOURCE_GROUP_NAME \
-    #     --name "$PREFIX-rule-01" \
-    #     --lb-name "$PREFIX-lb" \
-    #     --backend-pool-name $ss_name \
-    #     --backend-port 0 \
-    #     --frontend-ip-name "$PREFIX-ss-frontend-ip" \
-    #     --frontend-port 0 \
-    #     --protocol tcp
 }

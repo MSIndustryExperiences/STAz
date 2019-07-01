@@ -25,7 +25,7 @@ create_scale_set() {
     # CREATE AUTOSCALE PROFILE
     # AND RULES
     #############################
-        echo "az monitor autoscale create"
+    echo "az monitor autoscale create"
     az monitor autoscale create \
         --resource-group $RESOURCE_GROUP_NAME \
         --resource $PREFIX-vmss \
@@ -38,7 +38,7 @@ create_scale_set() {
     echo "az monitor autoscale rule create"
     az monitor autoscale rule create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --autoscale-name autoscale \
+        --autoscale-name "${PREFIX}AutoscaleProfile" \
         --condition "Percentage CPU < 20 avg 5m" \
         --scale in 1
 
