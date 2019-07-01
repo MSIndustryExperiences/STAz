@@ -35,7 +35,7 @@ create_scale_set() {
         --count 2
 
     az monitor autoscale rule create \
-        --resource-group myResourceGroup \
+        --resource-group $RESOURCE_GROUP_NAME \
         --autoscale-name "${PREFIX}AutoscaleProfile" \
         --condition "Percentage CPU > 50 avg 5m" \
         --scale out 1
