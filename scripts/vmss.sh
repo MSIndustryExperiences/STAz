@@ -3,58 +3,57 @@ set -e
 
 create_scale_set() {
 
-    local image_name=$1
-
     echo "CREATING VMSS"
 
     az vmss create \
-        -n "$PREFIX-vmss" \
-        -g $RESOURCE_GROUP_NAME \
+        --admin-username $VM_ADMIN_UID \
+        --authentication-type ssh \
+        --generate-ssh-keys \
         --image $VMSS_VM_IMAGE_NAME \
-        --instance-count 2 \
         --load-balancer "" \
+        --location $LOCATION \
         --public-ip-address "" \
         --subnet $WORKER_SUBNET_NAME \
+        --upgrade-policy-mode Automatic \
         --vnet-name $VNET_NAME \
-        --generate-ssh-keys \
-        --authentication-type ssh \
-        --admin-username $VM_ADMIN_UID \
-        --upgrade-policy-mode Automatic
+        -g $RESOURCE_GROUP_NAME \
+        -n "$PREFIX-vmss"
 
-    #############################
+    ############################
     # CREATE AUTOSCALE PROFILE
     # AND RULES
-    #############################
+    ############################
+    
     echo "az monitor autoscale create"
     az monitor autoscale create \
-        --resource-group $RESOURCE_GROUP_NAME \
-        --resource "$PREFIX-vmss" \
-        --resource-type Microsoft.Compute/virtualMachineScaleSets \
-        --name "${PREFIX}AutoscaleProfile" \
-        --min-count 2 \
+        --count 2 \
         --max-count 10 \
-        --count 2
-        
-    echo "az monitor autoscale rule create (in)"
+        --min-count 2 \
+        --name "autoscaler1" \
+        --resource "$PREFIX-vmss" \
+        --resource-group $RESOURCE_GROUP_NAME \
+        --resource-type Microsoft.Compute/virtualMachineScaleSets
+
     az monitor autoscale rule create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --autoscale-name "${PREFIX}AutoscaleProfile" \
+        --autoscale-name "autoscaler1" \
         --condition "Percentage CPU < 20 avg 5m" \
         --scale in 1
 
-    echo "az monitor autoscale rule create (out)"
     az monitor autoscale rule create \
         --resource-group $RESOURCE_GROUP_NAME \
-        --autoscale-name "${PREFIX}AutoscaleProfile" \
+        --autoscale-name "autoscaler1" \
         --condition "Percentage CPU > 50 avg 5m" \
         --scale out 1
+        # --resource "$PREFIX-vmss" \
+
+    
 
 
 }
 
 create_vmss_image() {
 
-    local image_name=$1
     local vm_name="SyTrueCentOsVm"
 
     echo "CREATING VMSS IMAGE"

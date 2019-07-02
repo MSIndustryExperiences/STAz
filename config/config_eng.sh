@@ -1,6 +1,6 @@
 echo "LOADING CONFIG"
 
-CUSTOMER_NAME="stEng"
+PREFIX="stEng"
 LOCATION="eastus" # the region where you want to deploy resources
 VM_ADMIN_UID="centos"
 
@@ -9,8 +9,6 @@ VM_ADMIN_UID="centos"
 # 1 - Create image
 CREATE_VMSS_VM_IMAGE=1
 VMSS_VM_IMAGE_NAME="CentOsScaleSetImage"
-
-PREFIX="$CUSTOMER_NAME" #prepended to resources
 
 # Networking
 
