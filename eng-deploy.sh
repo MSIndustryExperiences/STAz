@@ -8,6 +8,7 @@ set -e
 . ./scripts/scale_set.sh
 . ./scripts/vms.sh
 
+
 # Sign in on the command line with this command or uncomment this line
 # az login
 
