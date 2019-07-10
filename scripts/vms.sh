@@ -8,8 +8,6 @@ create_admin_vm() {
 
     echo ">>>>>>>> CREATING ADMIN MACHINE $vm_name <<<<<<<<<<<"
 
-    # --ssh-dest-key-path "./certs" \
-    # 
     az vm create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
@@ -20,7 +18,7 @@ create_admin_vm() {
         --nsg "$vm_name-nsg" \
         --nsg-rule SSH \
         --os-disk-name "$vm_name-os" \
-        --output table \
+        --output json \
         --private-ip-address $private_ip_address \
         --public-ip-address-allocation static \
         --public-ip-sku Standard \
@@ -29,7 +27,6 @@ create_admin_vm() {
         --subnet $ADMIN_SUBNET_NAME \
         --vnet-name $VNET_NAME \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
-        # --os-disk-size-gb 32 \
 
     echo ">>>>>>>> CREATED ADMIN VM: $vm_name <<<<<<<<<<<"
 }
@@ -58,7 +55,6 @@ create_test_worker_vm() {
         --subnet $WORKER_SUBNET_NAME \
         --vnet-name $VNET_NAME  \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
-        #--os-disk-size-gb 80 \
 
     echo ">>>>>>>> CREATED TEST WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
@@ -98,7 +94,6 @@ create_worker_vm() {
         --subnet $WORKER_SUBNET_NAME \
         --vnet-name $VNET_NAME  \
         || (echo "FAILED TO CREATE VM: $vm_name" && exit 1)
-        # --os-disk-size-gb $os_disk_size \
 
     echo ">>>>>>>> CREATED WORKER MACHINE $vm_name <<<<<<<<<<<"
 }
@@ -151,6 +146,4 @@ open_vm_inbound_ports() {
          ((priority++))
     done
 }
-
-\
 
