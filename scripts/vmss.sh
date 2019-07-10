@@ -46,10 +46,6 @@ create_scale_set() {
         --condition "Percentage CPU > 50 avg 5m" \
         --scale out 1
         # --resource "$PREFIX-vmss" \
-
-    
-
-
 }
 
 create_vmss_image() {
