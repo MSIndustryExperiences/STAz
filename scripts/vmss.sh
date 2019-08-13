@@ -3,8 +3,6 @@ set -e
 
 create_scale_set() {
 
-    echo "CREATING VMSS"
-
     az vmss create \
         --admin-username $VM_ADMIN_UID \
         --authentication-type ssh \
@@ -51,8 +49,6 @@ create_scale_set() {
 create_vmss_image() {
 
     local vm_name="SyTrueCentOsVm"
-
-    echo "CREATING VMSS IMAGE"
 
     az vm create \
         --admin-username $VM_ADMIN_UID \

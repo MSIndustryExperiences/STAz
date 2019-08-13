@@ -26,9 +26,7 @@ create_vnet () {
         --resource-group $RESOURCE_GROUP_NAME \
         --address-prefixes $VNET_IP \
         --location $LOCATION \
-         || (echo "FAILED TO CREATE $vnet_name" && exit 1)
+         || (echo "FAILED TO CREATE $VNET_NAME" && exit 1)
 
     echo "CREATED VNET $VNET_NAME"
 }
-
-
